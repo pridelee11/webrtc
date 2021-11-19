@@ -1,80 +1,84 @@
-let localVideo = document.getElementById("local-video")
-let remoteVideo = document.getElementById("remote-video")
+let localVideo = document.getElementById("local-video");
+let remoteVideo = document.getElementById("remote-video");
 
-localVideo.style.opacity = 0
-remoteVideo.style.opacity = 0
+localVideo.style.opacity = 0;
+remoteVideo.style.opacity = 0;
 
-localVideo.onplaying = () => { localVideo.style.opacity = 1 }
-remoteVideo.onplaying = () => { remoteVideo.style.opacity = 1 }
+localVideo.onplaying = () => {
+  localVideo.style.opacity = 1;
+};
+remoteVideo.onplaying = () => {
+  remoteVideo.style.opacity = 1;
+};
 
-let peer
+let peer;
 function init(userId) {
-    peer = new Peer(userId, {
-        host: '192.168.43.242',
-        port: 9000,
-        path: '/videocallapp'
-    })
+  peer = new Peer(userId, {
+    host: "192.168.0.10",
+    port: 9000,
+    path: "/videocallapp",
+  });
 
-    listen()
+  listen();
 }
 
-let localStream
+let localStream;
 function listen() {
-    peer.on('call', (call) => {
+  peer.on("call", (call) => {
+    navigator.getUserMedia(
+      {
+        audio: true,
+        video: true,
+      },
+      (stream) => {
+        localVideo.srcObject = stream;
+        localStream = stream;
 
-        navigator.getUserMedia({
-            audio: true, 
-            video: true
-        }, (stream) => {
-            localVideo.srcObject = stream
-            localStream = stream
+        call.answer(stream);
+        call.on("stream", (remoteStream) => {
+          remoteVideo.srcObject = remoteStream;
 
-            call.answer(stream)
-            call.on('stream', (remoteStream) => {
-                remoteVideo.srcObject = remoteStream
-
-                remoteVideo.className = "primary-video"
-                localVideo.className = "secondary-video"
-
-            })
-
-        })
-        
-    })
+          remoteVideo.className = "primary-video";
+          localVideo.className = "secondary-video";
+        });
+      }
+    );
+  });
 }
 
 function startCall(otherUserId) {
-    navigator.getUserMedia({
-        audio: true,
-        video: true
-    }, (stream) => {
+  navigator.getUserMedia(
+    {
+      audio: true,
+      video: true,
+    },
+    (stream) => {
+      localVideo.srcObject = stream;
+      localStream = stream;
 
-        localVideo.srcObject = stream
-        localStream = stream
+      const call = peer.call(otherUserId, stream);
+      call.on("stream", (remoteStream) => {
+        remoteVideo.srcObject = remoteStream;
 
-        const call = peer.call(otherUserId, stream)
-        call.on('stream', (remoteStream) => {
-            remoteVideo.srcObject = remoteStream
-
-            remoteVideo.className = "primary-video"
-            localVideo.className = "secondary-video"
-        })
-
-    })
+        remoteVideo.className = "primary-video";
+        localVideo.className = "secondary-video";
+      });
+    }
+  );
 }
 
 function toggleVideo(b) {
-    if (b == "true") {
-        localStream.getVideoTracks()[0].enabled = true
-    } else {
-        localStream.getVideoTracks()[0].enabled = false
-    }
-} 
+  if (b == "true") {
+    localStream.getVideoTracks()[0].enabled = true;
+  } else {
+    localStream.getVideoTracks()[0].enabled = false;
+  }
+}
 
 function toggleAudio(b) {
-    if (b == "true") {
-        localStream.getAudioTracks()[0].enabled = true
-    } else {
-        localStream.getAudioTracks()[0].enabled = false
-    }
-} 
+  if (b == "true") {
+    localStream.getAudioTracks()[0].enabled = true;
+  } else {
+    localStream.getAudioTracks()[0].enabled = false;
+  }
+}
