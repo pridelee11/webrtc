@@ -14,7 +14,7 @@ remoteVideo.onplaying = () => {
 let peer;
 function init(userId) {
   peer = new Peer(userId, {
-    host: "192.168.0.10",
+    host: "192.168.0.19",
     port: 9000,
     path: "/videocallapp",
   });
