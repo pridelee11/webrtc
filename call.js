@@ -17,7 +17,7 @@ function init(userId) {
     config: {
       iceServers: [
         { url: "stun:stun.l.google.com:19302" },
-        { url: "stun:global.stun.twilio.com:3478?transport=udp" },
+        // { url: "stun:global.stun.twilio.com:3478?transport=udp" },
       ],
     },
   });
