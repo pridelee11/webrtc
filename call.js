@@ -15,7 +15,10 @@ let peer;
 function init(userId) {
   peer = new Peer(userId, {
     config: {
-      iceServers: [{ url: "stun:stun.l.google.com:19302" }],
+      iceServers: [
+        { url: "stun:stun.l.google.com:19302" },
+        { url: "stun:global.stun.twilio.com:3478?transport=udp" },
+      ],
     },
   });
 
