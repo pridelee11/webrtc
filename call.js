@@ -18,6 +18,11 @@ function init(userId) {
       iceServers: [
         { url: "stun:stun.l.google.com:19302" },
         { url: "stun:global.stun.twilio.com:3478?transport=udp" },
+        {
+          url: "turn:numb.viagenie.ca",
+          credential: "5150as",
+          username: "pridelee@gmail.com",
+        },
       ],
     },
   });
