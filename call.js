@@ -13,6 +13,8 @@ remoteVideo.onplaying = () => {
 
 let peer;
 function init(userId) {
+  console.log("init userid : ", userId);
+
   peer = new Peer(userId, {
     config: {
       iceServers: [
@@ -68,6 +70,8 @@ function listen() {
 }
 
 function startCall(otherUserId) {
+  console.log("startCall otherUserId : ", otherUserId);
+
   navigator.getUserMedia(
     {
       audio: true,
@@ -103,3 +107,31 @@ function toggleAudio(b) {
     localStream.getAudioTracks()[0].enabled = false;
   }
 }
+
+//// login
+const HIDDEN_ID = "appservice1";
+
+const loginForm = document.querySelector("#login-form");
+const loginInput = document.querySelector("#login-form input");
+
+function onLoginSubmit(event) {
+  event.preventDefault();
+  const username = loginInput.value + HIDDEN_ID;
+  console.log("subimit user id : ", username);
+  init(username);
+}
+
+loginForm.addEventListener("submit", onLoginSubmit);
+
+//// connect to
+const connectForm = document.querySelector("#connect-form");
+const connectInput = document.querySelector("#connect-form input");
+
+function onConnect(event) {
+  event.preventDefault();
+  const toName = connectInput.value + HIDDEN_ID;
+  console.log("connet to : ", toName);
+  startCall(toName);
+}
+
+connectForm.addEventListener("submit", onConnect);

@@ -5,7 +5,30 @@
   </head>
   <body>
     <script src="./peerjs.js"></script>
-    <div>Hello</div>
+
+    <h2>WebRTC Test</h2>
+    <form class="inputbox" id="login-form">
+      <input
+        class="input"
+        required
+        maxlength="15"
+        type="text"
+        placeholder="What is your name?"
+      />
+      <input class="button" type="submit" value="Log In" />
+    </form>
+
+    <form class="inputbox" id="connect-form">
+      <input
+        class="input"
+        required
+        maxlength="15"
+        type="text"
+        placeholder="Connect to?"
+      />
+      <input class="button" type="submit" value="Connect" />
+    </form>
+
     <video class="secondary-video" autoplay id="remote-video"></video>
     <video class="primary-video" autoplay muted id="local-video"></video>
 
