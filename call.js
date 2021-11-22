@@ -27,7 +27,7 @@ function init(userId) {
         {
           url: "turn:numb.viagenie.ca",
           username: "pridelee@gmail.com",
-          credential: "5150as",
+          credential: "5150as1",
         },
       ],
     },
