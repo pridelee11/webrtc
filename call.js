@@ -24,11 +24,11 @@ function init(userId) {
         { url: "stun:stun3.l.google.com:19302" },
         { url: "stun:stun4.l.google.com:19302" },
         { url: "stun:global.stun.twilio.com:3478?transport=udp" },
-        {
-          url: "turn:numb.viagenie.ca",
-          username: "pridelee@gmail.com",
-          credential: "5150as1",
-        },
+        // {
+        //   url: "turn:numb.viagenie.ca",
+        //   username: "pridelee@gmail.com",
+        //   credential: "5150as",
+        // },
       ],
     },
   });
