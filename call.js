@@ -18,6 +18,7 @@ function init(userId) {
   peer = new Peer(userId, {
     config: {
       iceServers: [
+        
         { url: "stun:stun.l.google.com:19302" },
         { url: "stun:stun1.l.google.com:19302" },
         { url: "stun:stun2.l.google.com:19302" },
@@ -29,6 +30,7 @@ function init(userId) {
           username: "pridelee@gmail.com",
           credential: "5150as",
         },
+
       ],
     },
   });
