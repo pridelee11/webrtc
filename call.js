@@ -144,7 +144,9 @@ connectForm.addEventListener("submit", onConnect);
 
 //after connected
 function doAfterConnected() {
-  // console.log("doAfterConnected");
+  console.log("doAfterConnected");
+  connectInput.disabled = true;
+  connectButton.disabled = true;
   // loginForm.style.display = "none";
   // connectForm.style.display = "none";
 }
