@@ -25,11 +25,11 @@ function init(userId) {
         { url: "stun:stun3.l.google.com:19302" },
         { url: "stun:stun4.l.google.com:19302" },
         { url: "stun:global.stun.twilio.com:3478?transport=udp" },
-        {
-          url: "turn:numb.viagenie.ca",
-          username: "pridelee@gmail.com",
-          credential: "5150as",
-        },
+        // {
+        //   url: "turn:numb.viagenie.ca",
+        //   username: "pridelee@gmail.com",
+        //   credential: "5150as",
+        // },
 
       ],
     },
@@ -56,6 +56,8 @@ function listen() {
 
           remoteVideo.className = "primary-video";
           localVideo.className = "secondary-video";
+
+          doAfterConnected();
         });
       }
     );
@@ -80,6 +82,8 @@ function startCall(otherUserId) {
 
         remoteVideo.className = "primary-video";
         localVideo.className = "secondary-video";
+
+        doAfterConnected();
       });
     }
   );
@@ -106,11 +110,15 @@ const HIDDEN_ID = "appservice1";
 
 const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");
+const loginButton = document.querySelector("#login-btn");
 
 function onLoginSubmit(event) {
   event.preventDefault();
   const username = loginInput.value + HIDDEN_ID;
   console.log("subimit user id : ", username);
+  loginInput.disabled = true;
+  loginButton.disabled = true;
+  
   init(username);
 }
 
@@ -119,12 +127,24 @@ loginForm.addEventListener("submit", onLoginSubmit);
 //// connect to
 const connectForm = document.querySelector("#connect-form");
 const connectInput = document.querySelector("#connect-form input");
+const connectButton = document.querySelector("#connect-btn");
 
 function onConnect(event) {
   event.preventDefault();
   const toName = connectInput.value + HIDDEN_ID;
   console.log("connet to : ", toName);
+  connectInput.disabled = true;
+  connectButton.disabled = true;
+
   startCall(toName);
 }
 
 connectForm.addEventListener("submit", onConnect);
+
+
+//after connected
+function doAfterConnected() {
+  // console.log("doAfterConnected");
+  // loginForm.style.display = "none";
+  // connectForm.style.display = "none";
+}
