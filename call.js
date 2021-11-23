@@ -18,7 +18,6 @@ function init(userId) {
   peer = new Peer(userId, {
     config: {
       iceServers: [
-        
         { url: "stun:stun.l.google.com:19302" },
         { url: "stun:stun1.l.google.com:19302" },
         { url: "stun:stun2.l.google.com:19302" },
@@ -30,9 +29,24 @@ function init(userId) {
           username: "pridelee@gmail.com",
           credential: "5150as",
         },
-
       ],
     },
+  });
+
+  peer.on("open", (id) => {
+    console.log("open id ", id);
+  });
+
+  peer.on("close", () => {
+    console.log("close");
+  });
+
+  peer.on("disconnected", () => {
+    console.log("disconnected");
+  });
+
+  peer.on("error", (err) => {
+    console.log(err);
   });
 
   listen();
@@ -118,7 +132,7 @@ function onLoginSubmit(event) {
   console.log("subimit user id : ", username);
   loginInput.disabled = true;
   loginButton.disabled = true;
-  
+
   init(username);
 }
 
@@ -140,7 +154,6 @@ function onConnect(event) {
 }
 
 connectForm.addEventListener("submit", onConnect);
-
 
 //after connected
 function doAfterConnected() {
