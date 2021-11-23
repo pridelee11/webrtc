@@ -15,6 +15,7 @@ import java.util.*
 class CallActivity : AppCompatActivity() {
 
     private val TAG = "Jayden_CallActivity"
+    private val HIDDEN_ID = "appservice1"
 
     var username = ""
     var friendsUsername = ""
@@ -35,7 +36,7 @@ class CallActivity : AppCompatActivity() {
         Log.d(TAG, "jayden username : " + username);
 
         callBtn.setOnClickListener {
-            friendsUsername = friendNameEdit.text.toString()
+            friendsUsername = friendNameEdit.text.toString() + HIDDEN_ID
             sendCallRequest()
         }
 

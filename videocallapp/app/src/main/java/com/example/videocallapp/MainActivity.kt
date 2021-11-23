@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "Jayden_AppCompatActivity"
+    private val HIDDEN_ID = "appservice1"
+
     private val permissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
     private val requestcode = 1
 
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 //        Firebase.initialize(this)
 
         loginBtn.setOnClickListener {
-            val username = usernameEdit.text.toString();
+            val username = usernameEdit.text.toString() + HIDDEN_ID
             Log.d(TAG, "jayden " + username)
             val intent = Intent(this, CallActivity::class.java)
             intent.putExtra("username", username)
