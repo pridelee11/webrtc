@@ -26,7 +26,7 @@ function init(userId) {
         { url: "stun:stun4.l.google.com:19302" },
         { url: "stun:global.stun.twilio.com:3478?transport=udp" },
         {
-          url: "stun:numb.viagenie.ca",
+          url: "turn:numb.viagenie.ca",
           username: "pridelee@gmail.com",
           credential: "5150as",
         },
