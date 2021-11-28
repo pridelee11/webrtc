@@ -2,36 +2,43 @@
 <html>
   <head>
     <link href="./style.css" rel="stylesheet" />
-    <Title>WebRTC</Title>
+    <title>WebRTC</title>
   </head>
   <body>
     <!-- <script src="./peerjs.js"></script> -->
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
-    <h2>WebRTC</h2>
-    <form class="inputbox" id="login-form">
-      <input
-        class="input"
-        required
-        maxlength="15"
-        type="text"
-        placeholder="What is your name?"
-      />
-      <input class="button" id="login-btn" type="submit" value="Log In" />
-    </form>
+    <div class="container_input">
+      <h2>WebRTC</h2>
+      <form class="inputbox" id="login-form">
+        <input
+          class="input"
+          required
+          maxlength="15"
+          type="text"
+          placeholder="What is your name?"
+        />
+        <input class="button" id="login-btn" type="submit" value="Log In" />
+      </form>
 
-    <form class="inputbox" id="connect-form">
-      <input
-        class="input"
-        required
-        maxlength="15"
-        type="text"
-        placeholder="Connect to?"
-      />
-      <input class="button" id="connect-btn" type="submit" value="Connect" />
-    </form>
+      <form class="inputbox" id="connect-form">
+        <input
+          class="input"
+          required
+          maxlength="15"
+          type="text"
+          placeholder="Connect to?"
+        />
+        <input class="button" id="connect-btn" type="submit" value="Connect" />
+      </form>
+    </div>
 
-    <video class="secondary-video" autoplay id="remote-video"></video>
-    <video class="primary-video" autoplay muted id="local-video"></video>
+    <div class="container_video">
+      <video class="secondary-video" autoplay id="remote-video"></video>
+      <video class="primary-video" autoplay muted id="local-video"></video>
+      <div class="btn-ctrl">
+        <button class="button" id="btn-mute">mute</button>
+      </div>
+    </div>
 
     <script src="./call.js"></script>
   </body>

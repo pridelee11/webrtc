@@ -2,23 +2,18 @@
 
 html,
 body {
+  margin: 0;
   padding: 0;
-  margin: 10px;
-}
-
-.primary-video {
-  position: absolute;
-  width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
-.secondary-video {
+/* input: login, connect */
+.container_input {
+  width: 100%;
   position: absolute;
-  max-width: 30%;
-  width: 30%;
-  margin: 16px;
-  border-radius: 16px;
+  z-index: 1;
+  text-align: center;
+  transition: opacity 1s ease-in-out;
 }
 
 .inputbox {
@@ -32,11 +27,49 @@ body {
   padding: 10px;
   border-radius: 10px;
   font-size: 1.2em;
+  transition: 0.5s;
 }
 .inputbox .input:disabled {
   background: gray;
 }
 
+/* video layer  */
+.container_video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.primary-video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 2s ease-in-out;
+}
+
+.secondary-video {
+  position: absolute;
+  max-width: 30%;
+  width: 30%;
+  margin: 16px;
+  border-radius: 16px;
+  transition: opacity 2s ease-in-out;
+}
+
+.btn-ctrl {
+  width: 100%;
+  top: 10px;
+  position: absolute;
+  text-align: center;
+  z-index: 2;
+}
+
+#btn-mute {
+  opacity: 0;
+}
+
+/* css for buttons */
 .button {
   width: 80px;
   height: 100%;
@@ -45,6 +78,7 @@ body {
   border: #fff;
   padding: 10px;
   border-radius: 10px;
+  transition: 0.5s;
 }
 .button:hover {
   background: #06b;

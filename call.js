@@ -121,10 +121,23 @@ function toggleAudio(b) {
 
 //// login
 const HIDDEN_ID = "appservice1";
-
+const container_input = document.querySelector(".container_input");
+const mute_btn = document.querySelector("#btn-mute");
 const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");
 const loginButton = document.querySelector("#login-btn");
+
+let mute = false;
+mute_btn.addEventListener("click", () => {
+  mute = !mute;
+  if (mute) {
+    mute_btn.innerText = "unmute";
+  } else {
+    mute_btn.innerText = "mute";
+  }
+  console.log("click mute ", mute);
+  toggleAudio(mute);
+});
 
 function onLoginSubmit(event) {
   event.preventDefault();
@@ -160,6 +173,7 @@ function doAfterConnected() {
   console.log("doAfterConnected");
   connectInput.disabled = true;
   connectButton.disabled = true;
-  // loginForm.style.display = "none";
-  // connectForm.style.display = "none";
+  // container_input.style.display = "none";
+  container_input.style.opacity = 0;
+  mute_btn.style.opacity = 1;
 }
