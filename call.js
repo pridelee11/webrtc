@@ -178,7 +178,7 @@ function doAfterConnected() {
   // container_input.style.display = "none";
   container_input.style.opacity = 0;
   mute_btn.style.opacity = 1;
-  if (audioEnable) {
-    changeAudio();
-  }
+  // if (audioEnable) {
+  //   changeAudio();
+  // }
 }
