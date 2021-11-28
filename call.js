@@ -111,12 +111,13 @@ function toggleVideo(b) {
   }
 }
 
-function toggleAudio(b) {
-  if (b == "true") {
+function toggleAudio(enable) {
+  if (enable) {
     localStream.getAudioTracks()[0].enabled = true;
   } else {
     localStream.getAudioTracks()[0].enabled = false;
   }
+  console.log("localstream ", localStream.getAudioTracks()[0].enabled);
 }
 
 //// login
@@ -131,9 +132,9 @@ let audioEnable = true;
 function changeAudio() {
   audioEnable = !audioEnable;
   if (audioEnable) {
-    mute_btn.innerText = "mute";
+    mute_btn.innerText = "Audio On";
   } else {
-    mute_btn.innerText = "unmute";
+    mute_btn.innerText = "Audio Off";
   }
   console.log("click audio ", audioEnable);
   toggleAudio(audioEnable);
@@ -178,7 +179,7 @@ function doAfterConnected() {
   // container_input.style.display = "none";
   container_input.style.opacity = 0;
   mute_btn.style.opacity = 1;
-  // if (audioEnable) {
-  //   changeAudio();
-  // }
+  if (audioEnable) {
+    changeAudio();
+  }
 }
