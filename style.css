@@ -65,7 +65,7 @@ body {
   z-index: 2;
 }
 
-#btn-mute {
+.btn-ctrl .button {
   opacity: 0;
 }
 

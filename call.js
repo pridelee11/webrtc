@@ -103,8 +103,8 @@ function startCall(otherUserId) {
   );
 }
 
-function toggleVideo(b) {
-  if (b == "true") {
+function toggleVideo(enable) {
+  if (enable) {
     localStream.getVideoTracks()[0].enabled = true;
   } else {
     localStream.getVideoTracks()[0].enabled = false;
@@ -123,10 +123,24 @@ function toggleAudio(enable) {
 //// login
 const HIDDEN_ID = "appservice1";
 const container_input = document.querySelector(".container_input");
+const video_btn = document.querySelector("#btn-video");
 const mute_btn = document.querySelector("#btn-mute");
+
 const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");
 const loginButton = document.querySelector("#login-btn");
+
+let videoEnable = true;
+function changeVideo() {
+  videoEnable = !videoEnable;
+  if (videoEnable) {
+    video_btn.innerText = "Video On";
+  } else {
+    video_btn.innerText = "Video Off";
+  }
+  console.log("click video ", videoEnable);
+  toggleVideo(videoEnable);
+}
 
 let audioEnable = true;
 function changeAudio() {
@@ -140,6 +154,7 @@ function changeAudio() {
   toggleAudio(audioEnable);
 }
 
+video_btn.addEventListener("click", changeVideo);
 mute_btn.addEventListener("click", changeAudio);
 
 function onLoginSubmit(event) {
@@ -178,8 +193,9 @@ function doAfterConnected() {
   connectButton.disabled = true;
   // container_input.style.display = "none";
   container_input.style.opacity = 0;
+  video_btn.style.opacity = 1;
   mute_btn.style.opacity = 1;
-  if (audioEnable) {
-    changeAudio();
-  }
+  // if (audioEnable) {
+  //   changeAudio();
+  // }
 }
