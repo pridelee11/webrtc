@@ -68,8 +68,8 @@ function listen() {
         call.on("stream", (remoteStream) => {
           remoteVideo.srcObject = remoteStream;
 
-          remoteVideo.className = "primary-video";
-          localVideo.className = "secondary-video";
+          // remoteVideo.className = "primary-video";
+          // localVideo.className = "secondary-video";
 
           doAfterConnected();
         });
@@ -94,8 +94,8 @@ function startCall(otherUserId) {
       call.on("stream", (remoteStream) => {
         remoteVideo.srcObject = remoteStream;
 
-        remoteVideo.className = "primary-video";
-        localVideo.className = "secondary-video";
+        // remoteVideo.className = "primary-video";
+        // localVideo.className = "secondary-video";
 
         doAfterConnected();
       });
@@ -127,17 +127,19 @@ const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");
 const loginButton = document.querySelector("#login-btn");
 
-let mute = false;
-mute_btn.addEventListener("click", () => {
-  mute = !mute;
-  if (mute) {
-    mute_btn.innerText = "unmute";
-  } else {
+let audioEnable = true;
+function changeAudio() {
+  audioEnable = !audioEnable;
+  if (audioEnable) {
     mute_btn.innerText = "mute";
+  } else {
+    mute_btn.innerText = "unmute";
   }
-  console.log("click mute ", mute);
-  toggleAudio(mute);
-});
+  console.log("click audio ", audioEnable);
+  toggleAudio(audioEnable);
+}
+
+mute_btn.addEventListener("click", changeAudio);
 
 function onLoginSubmit(event) {
   event.preventDefault();
@@ -176,4 +178,7 @@ function doAfterConnected() {
   // container_input.style.display = "none";
   container_input.style.opacity = 0;
   mute_btn.style.opacity = 1;
+  if (audioEnable) {
+    changeAudio();
+  }
 }
