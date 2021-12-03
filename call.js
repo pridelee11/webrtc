@@ -129,6 +129,24 @@ const mute_btn = document.querySelector("#btn-mute");
 const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");
 const loginButton = document.querySelector("#login-btn");
+// const sendButton = document.querySelector("#send-btn");
+// const subscribeButton = document.getElementById("sub-button");
+
+// subscribeButton.addEventListener("click", function() {
+//   Notification.requestPermission().then(function (result)
+//     {
+//         if (result === 'granted')
+//         {
+//             console.log('[Notification] permit: ', result);
+//         }
+//         else
+//         {
+//             console.log('[Notification] disagree: ', result);
+//         }
+//     });
+// });
+
+// sendButton.addEventListener("click", sendFcmMessage);
 
 let videoEnable = true;
 function changeVideo() {
@@ -176,12 +194,15 @@ const connectButton = document.querySelector("#connect-btn");
 
 function onConnect(event) {
   event.preventDefault();
-  const toName = connectInput.value + HIDDEN_ID;
-  console.log("connet to : ", toName);
+  if (connectInput.value == "wing") {
+    sendFcmMessage();
+  } else {
+    const toName = connectInput.value + HIDDEN_ID;
+    console.log("connet to : ", toName);
+    startCall(toName);
+  }
   connectInput.disabled = true;
   connectButton.disabled = true;
-
-  startCall(toName);
 }
 
 connectForm.addEventListener("submit", onConnect);
@@ -199,3 +220,34 @@ function doAfterConnected() {
   //   changeAudio();
   // }
 }
+
+function sendFcmMessage() {
+  const connectInputMessage = loginInput.value;
+  console.log(connectInputMessage);
+
+  var xhr = new XMLHttpRequest();
+  var url = "https://fcm.googleapis.com/fcm/send";
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+  xhr.setRequestHeader("Authorization", "key=AAAAijmYXZ4:APA91bH_oG8nwEgPZlrSNyL2HCHnjBB5StFAJ3I9dm1C30H7xAbW10m_QWaceIsJVlmif6nUmIMxDe0u1ViCqT4hKhumzAXAFf1Ypeqe3zugkYy38vZjaUFiJYQ0XkOWbiwuS8iHGISh");
+  xhr.onreadystatechange = function () {
+     console.log("xhr.status : " + xhr.status);
+     console.log("xhr.readyState : " + xhr.readyState);
+  if (xhr.readyState === 4 && xhr.status === 200) {
+
+              console.log("xhr.responseText : " + xhr.responseText);
+  var json = JSON.parse(xhr.responseText);
+  console.log(json);
+  }
+};
+  var data = JSON.stringify(  {
+         'to': 'eFv1JA5uQ6u-wMqRSqsDNi:APA91bEwVrFr8bN_9wq1z2xc_prS09nAe7q7hWS9QpAtKZsiD5vcJTx8UiBvIt_xQpa6bF837akF8XHsayy2bKe7f8-bKa3oCf4CcppCAKyLeVdbotKA6i2gjTh9uy_oa39kfkMUyawz',
+                         "data" : { "title" : "webrtc", "body" :"Please Click" , "friendname" :  connectInputMessage }}
+  
+);
+  console.log(data);
+  xhr.send(data);
+}
+
+
+

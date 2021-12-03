@@ -2,6 +2,8 @@
 <html>
   <head>
     <link href="./style.css" rel="stylesheet" />
+     <!-- push 추가 manifest 참조추가 -->
+    <link rel="manifest" href="manifest.json">
     <title>WebRTC</title>
   </head>
   <body>
@@ -29,7 +31,13 @@
           placeholder="Connect to?"
         />
         <input class="button" id="connect-btn" type="submit" value="Connect" />
+        <!-- <button class="button" id="send-btn">Invite</button> -->
+
       </form>
+      <!-- <br>
+      <button class="button" id="sub-button">Subscribe</button> -->
+      
+
     </div>
 
     <div class="container_video">
@@ -42,5 +50,95 @@
     </div>
 
     <script src="./call.js"></script>
+ 
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-messaging.js"></script>
+
+    <script type="module" >
+    // import {initFireBase} from "./firebase.js";
+    function initFireBase(serviceWorkRegistration) {
+        const firebaseConfig = {
+         apiKey: "AIzaSyBcYJO-phtTP7BZ6ZBfxW5_q5RMR_Vkk9w",
+         authDomain: "webrtcdemo-d6f83.firebaseapp.com",
+         projectId: "webrtcdemo-d6f83",
+         storageBucket: "webrtcdemo-d6f83.appspot.com",
+         messagingSenderId: "593671773598",
+          appId: "1:593671773598:web:5411b7727d61336f0f4a8f",
+          measurementId: "G-DD0Q0THB16"
+        };
+
+     // Initialize Firebase
+
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+      var messaging = firebase.messaging();
+      messaging.useServiceWorker(serviceWorkRegistration);
+      messaging.usePublicVapidKey("BH2XwnpA1W7wNx4Pfm0WrJ403-_idcRJkdhLbK4wnMky7VZG_9qpesPt_bpo5cUd6ncTfiK6MyoXF3_Kza_2l4w");
+
+      //Instance ID Token 발급 요청
+    messaging.getToken()
+        .then((currentToken) =>
+        {
+            if (currentToken)
+            {
+                console.log('[InstanceID Token] 발행완료: ', currentToken);
+                sendTokenToServer(currentToken); //Token을 서버로 전송
+            }
+            else
+            {
+                console.log('[InstanceID Token] 발행실패');
+                sendTokenToServer(null);
+            }
+        })
+        .catch((err) =>
+        {
+            console.log('[InstanceID Token] 발행오류: ', err);
+            sendTokenToServer(null);
+        });
+ 
+    //Instance ID Token 변경 시 호출되는 이벤트
+    messaging.onTokenRefresh(() =>
+    {
+        messaging.getToken().then((refreshedToken) =>
+        {
+            console.log('[InstanceID Token] 갱신완료', refreshedToken);
+            // sendTokenToServer(refreshedToken); //Token을 서버로 전송
+        })
+        .catch((err) =>
+        {
+            console.log('[InstanceID Token] 갱신실패', err);
+            sendTokenToServer(null);
+        });
+    });
+ 
+    messaging.onMessage((payload) =>
+    {
+        //Push Message 수신 시 호출되는 이벤트
+        console.log('[PushMessage] 수신: ', payload);
+    });
+
+  }
+
+
+ 
+  function sendTokenToServer(token) {
+
+  console.log('sendTokenToServer', token);
+  }
+
+    var isServiceWorkerSupported = 'serviceWorker' in navigator;
+    if (isServiceWorkerSupported)
+    {
+      //브라우저에 Service Worker를 등록
+      navigator.serviceWorker.register('service-worker.js', { scope: '/'}).then(function(registration) {
+       console.log('[ServiceWorker] 등록 성공: ', registration.scope);
+       initFireBase(registration);
+        }).catch(function(err) {
+       console.log('[ServiceWorker] 등록 실패: ', err);
+       });
+    }
+    </script>
   </body>
 </html>
